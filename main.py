@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Configure this to your Replit Flask backend URL
-FLASK_BACKEND_URL = "https://your-repl-name.username.repl.co"  # Change this!
+FLASK_BACKEND_URL = "https://fdff88e3-377b-4931-9cfc-1670909b1a1d-00-2aklbh6fa4lv3.pike.replit.dev/"  # Change this!
 
 def display_paper_info(paper_info):
     st.subheader(paper_info['title'])
