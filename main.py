@@ -34,16 +34,35 @@ if 'model' not in st.session_state:
 # Sidebar untuk API Key
 with st.sidebar:
     st.header("⚙️ Konfigurasi")
-    api_key = st.text_input("Gemini API Key:", type="password", help="Masukkan Google Gemini API Key Anda")
+    api_key = st.text_input("Gemini API Key:", type="password", help="AIzaSyAxwloFIqGSiYe-1EdhPT_O1CvJwel2GIs")
+    
+    # Pilihan model Gemini 2.0
+    model_options = [
+        "gemini-2.0-flash-exp",
+        "gemini-2.0-flash-thinking-exp-1219",
+        "models/gemini-2.0-flash-exp",
+        "models/gemini-2.0-flash-thinking-exp-1219",
+        "gemini-exp-1206",
+        "models/gemini-exp-1206"
+    ]
+    selected_model = st.selectbox("Pilih Model:", model_options, index=0)
     
     if api_key and not st.session_state.gemini_configured:
         try:
             genai.configure(api_key=api_key)
-            st.session_state.model = genai.GenerativeModel("gemini-2.0-flash-exp")
+            st.session_state.model = genai.GenerativeModel(selected_model)
             st.session_state.gemini_configured = True
-            st.success("✅ API Key berhasil dikonfigurasi!")
+            st.success(f"✅ API Key berhasil dikonfigurasi dengan model: {selected_model}!")
         except Exception as e:
             st.error(f"❌ Error: {str(e)}")
+            st.info("💡 Coba model lain dari dropdown di atas")
+    
+    # Tombol reset
+    if st.session_state.gemini_configured:
+        if st.button("🔄 Reset Konfigurasi"):
+            st.session_state.gemini_configured = False
+            st.session_state.model = None
+            st.rerun()
     
     st.markdown("---")
     st.markdown("### 📖 Tentang")
